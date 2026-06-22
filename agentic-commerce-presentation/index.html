@@ -40,6 +40,47 @@
             pointer-events: none;
             object-fit: contain;
         }
+        #nav-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            opacity: 0.15;
+            transition: opacity 0.3s ease;
+        }
+        #nav-controls:hover {
+            opacity: 1;
+        }
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .nav-button:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            transform: translateY(-2px);
+        }
+        .nav-button:active {
+            transform: translateY(0);
+        }
+        #slide-counter {
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 50px;
+            text-align: center;
+        }
         #racetrack-bg {
             position: absolute;
             z-index: -1;
@@ -168,6 +209,12 @@
 <body>
 
 <img id="fixed-logo" src="./assets/logo-weiss.png" alt="Logo" />
+
+<div id="nav-controls">
+    <button class="nav-button" id="prev-slide">← Previous</button>
+    <span id="slide-counter">1 / 10</span>
+    <button class="nav-button" id="next-slide">Next →</button>
+</div>
 
 <div id="impress">
 
@@ -359,11 +406,58 @@
 
 <script src="./js/impress.js"></script>
 <script>
-    impress().init();
+    const api = impress();
+    api.init();
     
-    // Fullscreen toggle on 'f' key
+    const slides = document.querySelectorAll('.step');
+    const totalSlides = slides.length;
+    let currentSlideIndex = 0;
+    
+    const slideCounter = document.getElementById('slide-counter');
+    const prevButton = document.getElementById('prev-slide');
+    const nextButton = document.getElementById('next-slide');
+    
+    function updateSlideCounter() {
+        slideCounter.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
+    }
+    
+    function goToSlide(index) {
+        if (index >= 0 && index < totalSlides) {
+            currentSlideIndex = index;
+            api.goto(slides[index], 1000);
+            updateSlideCounter();
+        }
+    }
+    
+    // Navigation button handlers
+    nextButton.addEventListener('click', () => {
+        goToSlide(currentSlideIndex + 1);
+    });
+    
+    prevButton.addEventListener('click', () => {
+        goToSlide(currentSlideIndex - 1);
+    });
+    
+    // Track slide changes via impress events
+    document.addEventListener('impress:stepenter', (event) => {
+        const stepElement = event.target;
+        for (let i = 0; i < slides.length; i++) {
+            if (slides[i] === stepElement) {
+                currentSlideIndex = i;
+                updateSlideCounter();
+                break;
+            }
+        }
+    });
+    
+    // Keyboard navigation (arrow keys in addition to impress default)
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'f' || event.key === 'F') {
+        if (event.key === 'ArrowRight' || event.key === ' ') {
+            goToSlide(currentSlideIndex + 1);
+        } else if (event.key === 'ArrowLeft') {
+            goToSlide(currentSlideIndex - 1);
+        } else if (event.key === 'f' || event.key === 'F') {
+            // Fullscreen toggle on 'f' key
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
                     console.log('Fullscreen request failed:', err);
@@ -373,6 +467,8 @@
             }
         }
     });
+    
+    updateSlideCounter();
 </script>
 
 </body>
