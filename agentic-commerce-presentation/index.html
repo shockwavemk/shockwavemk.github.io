@@ -171,9 +171,6 @@
 
 <div id="impress">
 
-    <!-- Racetrack Background (3D Depth Layer) -->
-    <div id="racetrack-bg" class="step" data-x="5000" data-y="5000" data-z="-200" data-scale="1" data-rotate="0"></div>
-
     <!-- 1. TITLE -->
     <div class="step slide-01" data-x="2300" data-y="-1500" data-rotate="0" data-z="100" data-scale="1.4" data-rotate-x="-6" data-rotate-y="9">
         <div style="text-align:center;">
@@ -201,15 +198,7 @@
                 <p style="margin-top:20px;"><strong>Agentic Checkout:</strong> Ein Satz. Der Agent versteht den Kontext, findet Produkte, wählt Optionen, bucht die Zahlung. Fertig in 45 Sekunden.</p>
             </div>
             <div style="flex:1;">
-                <table>
-                    <tr style="border-bottom:1px solid rgba(255,106,0,0.3);"><td style="color:#ff6a00;font-weight:700;">Alte Methode</td><td style="text-align:right;">7–8 Min</td></tr>
-                    <tr style="border-bottom:1px solid rgba(255,106,0,0.3);"><td style="color:#ff6a00;font-weight:700;">Abbruchquote</td><td style="text-align:right;">44% bei Zahlung</td></tr>
-                    <tr style="border-bottom:1px solid #39d353;"><td style="color:#39d353;font-weight:700;">Neue Methode</td><td style="text-align:right;color:var(--accent2);">45 Sekunden</td></tr>
-                    <tr><td style="color:#39d353;font-weight:700;">Abbruchquote</td><td style="text-align:right;color:var(--accent2);">Nur Budget-Fehler</td></tr>
-                </table>
-                <div style="margin-top:20px; padding:14px; background:rgba(57,211,83,0.1); border-left:4px solid #39d353; border-radius:6px;">
-                    <strong style="color:#39d353;">💡 Erkenntnisse:</strong> Weniger Reibung = höhere Conversion · KI versteht Intent und Customer besser als Formulare
-                </div>
+                <img src="images/checkout.png" alt="Checkout comparison" style="max-width:100%; height:auto; border-radius:6px;">
             </div>
         </div>
 
@@ -242,12 +231,20 @@
                 <p>Keine neuen Datenbanken. Keine Migration. Keine Risiken.</p>
                 <p style="margin-top:16px;">Der Agent sitzt <strong>oben auf</strong> dem bestehenden Aroma-System. Alle Preisregeln, Lagerbestände, Rabatte — alles läuft wie immer.</p>
             </div>
-            <div style="flex:1;">
-                <strong>Stack (3 Komponenten):</strong>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
-                    <div class="card" style="padding:18px;"><div class="label">Agent Orchestrator</div><strong>agentic-commerce-poc</strong><br><small>Python · CrewAI · FastAPI</small></div>
-                    <div class="card" style="padding:18px;"><div class="label">KI-Gehirn</div><strong>Azure OpenAI</strong><br><small>GPT-5 Mini · Tool Calling</small></div>
-                    <div class="card" style="padding:18px;"><div class="label">MCP Tool Bridge</div><strong>a28 / T9T</strong><br><small>8+ Tools</small></div>
+            <div style="flex:1; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+                <div style="flex:0 1 calc(33.333% - 16px); padding:24px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:12px; color:white; text-align:center; box-shadow:0 4px 15px rgba(102,126,234,0.4); min-height:120px; display:flex; flex-direction:column; justify-content:center;">
+                    <div style="font-size:13px; font-weight:600; opacity:0.85; text-transform:uppercase; letter-spacing:0.5px;">Agent Orchestrator</div>
+                    <div style="font-size:15px; font-weight:700; margin-top:10px;">agentic-commerce-poc</div>
+                </div>
+                <div style="flex:0 0 auto; font-size:24px; color:rgba(255,255,255,0.5);">→</div>
+                <div style="flex:0 1 calc(33.333% - 16px); padding:24px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:12px; color:white; text-align:center; box-shadow:0 4px 15px rgba(102,126,234,0.4); min-height:120px; display:flex; flex-direction:column; justify-content:center;">
+                    <div style="font-size:13px; font-weight:600; opacity:0.85; text-transform:uppercase; letter-spacing:0.5px;">KI-Gehirn</div>
+                    <div style="font-size:15px; font-weight:700; margin-top:10px;">Azure OpenAI</div>
+                </div>
+                <div style="flex:0 0 auto; font-size:24px; color:rgba(255,255,255,0.5);">→</div>
+                <div style="flex:0 1 calc(33.333% - 16px); padding:24px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:12px; color:white; text-align:center; box-shadow:0 4px 15px rgba(102,126,234,0.4); min-height:120px; display:flex; flex-direction:column; justify-content:center;">
+                    <div style="font-size:13px; font-weight:600; opacity:0.85; text-transform:uppercase; letter-spacing:0.5px;">MCP Tool Bridge</div>
+                    <div style="font-size:15px; font-weight:700; margin-top:10px;">a28 / T9T</div>
                 </div>
             </div>
         </div>
@@ -312,23 +309,36 @@
     <div class="step slide-05" data-x="-840" data-y="-5242" data-z="100" data-rotate="280" data-scale="0.9" data-rotate-x="14" data-rotate-y="-18">
         <h2>Auf dem Weg zur Produktion.</h2>
         <div style="display:flex; gap:60px; margin-top:40px;">
-            <div style="flex:1;">
+            <div style="flex:1; font-size:1.5rem;">
                 <p>Kein Spielzeug. Ein echtes System mit echten Daten. Live-Bestellungen. Echte Zahlungen. Kubernetes deployed.</p>
             </div>
-            <div style="flex:1;">
-                <ul style="margin-top:16px; line-height:2.0; font-size:1.1rem;">
-                    <li>✅ Agent Codebase — Python · CrewAI</li>
-                    <li>✅ Frontend Scaffold — Nuxt 4</li>
-                    <li>✅ MCP Tools — 8+ vorkonfiguriert für T9T</li>
-                    <li>✅ Self-Test Suite — LLM-basiert, selbstverbessernd</li>
-                    <li>✅ Mehrsprachig — DE, EN, FR</li>
-                </ul>
+            <div style="flex:1; display:flex; flex-direction:column; gap:16px;">
+                <div style="padding:18px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:10px; color:white; text-align:left; box-shadow:0 4px 15px rgba(102,126,234,0.4);">
+                    <div style="font-size:15px; font-weight:600;">✅ Agent Codebase</div>
+                    <div style="font-size:13px; opacity:0.85; margin-top:4px;">Python · CrewAI</div>
+                </div>
+                <div style="padding:18px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:10px; color:white; text-align:left; box-shadow:0 4px 15px rgba(102,126,234,0.4);">
+                    <div style="font-size:15px; font-weight:600;">✅ Frontend Scaffold</div>
+                    <div style="font-size:13px; opacity:0.85; margin-top:4px;">Nuxt 4</div>
+                </div>
+                <div style="padding:18px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:10px; color:white; text-align:left; box-shadow:0 4px 15px rgba(102,126,234,0.4);">
+                    <div style="font-size:15px; font-weight:600;">✅ MCP Tools</div>
+                    <div style="font-size:13px; opacity:0.85; margin-top:4px;">8+ vorkonfiguriert für T9T</div>
+                </div>
+                <div style="padding:18px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:10px; color:white; text-align:left; box-shadow:0 4px 15px rgba(102,126,234,0.4);">
+                    <div style="font-size:15px; font-weight:600;">✅ Self-Test Suite</div>
+                    <div style="font-size:13px; opacity:0.85; margin-top:4px;">LLM-basiert, selbstverbessernd</div>
+                </div>
+                <div style="padding:18px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:10px; color:white; text-align:left; box-shadow:0 4px 15px rgba(102,126,234,0.4);">
+                    <div style="font-size:15px; font-weight:600;">✅ Mehrsprachig</div>
+                    <div style="font-size:13px; opacity:0.85; margin-top:4px;">DE, EN, FR</div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- 10. FINALE -->
-    <div class="step slide-07" data-x="1411" data-y="-3943" data-z="100" data-scale="2.4" data-rotate="320" data-rotate-x="-2" data-rotate-y="3">
+    <div class="step slide-07" data-x="1411" data-y="-3943" data-z="100" data-scale="1.4" data-rotate="300" data-rotate-x="-2" data-rotate-y="3">
         <div style="text-align:center;">
             <h1 style="margin-top:40px;">Der nächste Lap startet jetzt.</h1>
             <div style="margin-top:70px; font-size:2.6rem; line-height:1.35; font-weight:600;">
@@ -341,6 +351,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Racetrack Background (3D Depth Layer) -->
+    <div id="racetrack-bg" class="step" data-x="5000" data-y="5000" data-z="-150" data-scale="1" data-rotate="0"></div>
 
 </div>
 
