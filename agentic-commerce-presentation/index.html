@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agentic Commerce POC — 10-Min Blast</title>
+    
+    <link rel="stylesheet" href="./css/impress.css" />
+    
+    <style>
+        :root {
+            --bg: #0a0e1a;
+            --surface: #161b2b;
+            --border: #2a334a;
+            --accent: #00d4ff;
+            --accent2: #39d353;
+            --accent3: #ff6a00;
+            --text: #d0e8ff;
+            --muted: #a0b8d8;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            overflow: hidden;
+            perspective: 1200px;
+        }
+        #impress {
+            perspective: 1200px;
+            transform-style: preserve-3d;
+            perspective-origin: 50% 50%;
+        }
+        #fixed-logo {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            width: 100px;
+            height: auto;
+            pointer-events: none;
+            object-fit: contain;
+        }
+        #racetrack-bg {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.5;
+            pointer-events: none;
+            width: 50000px;
+            height: 50000px;
+            background-color: #a2cf23;
+            background-image: url('assets/full-track.svg');
+            background-size: 2500px 2500px;
+            background-repeat: repeat;
+            left: -25000px;
+            top: -25000px;
+        }
+        .step {
+            width: 1050px;
+            padding: 80px 80px;
+            min-height: 700px;
+            background: rgba(10, 14, 26, 0.85);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 30px 90px rgba(0,0,0,0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            transition: background 10s ease;
+        }
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 18px;
+            z-index: -1;
+            opacity: 1;
+            transition: opacity 10s ease, filter 4s ease;
+            filter: brightness(0.7) contrast(1.1);
+        }
+        .step.active::before {
+            opacity: 0.1;
+            filter: brightness(0.25) contrast(1.1) grayscale(100%);
+        }
+        .step > * {
+            position: relative;
+            z-index: 1;
+        }
+        .slide-01::before { background-image: url('./images/01-title-bg.jpg'); }
+        .slide-02::before { background-image: url('./images/02-starting-grid-bg.jpg'); }
+        .slide-03::before { background-image: url('./images/03-telemetry-bg.jpg'); }
+        .slide-04::before { background-image: url('./images/04-mcp-protocol-bg.jpg'); }
+        .slide-05::before { background-image: url('./images/05-agent-cockpit-bg.jpg'); }
+        .slide-06::before { background-image: url('./images/06-race-circuit-bg.jpg'); }
+        .slide-07::before { background-image: url('./images/07-finish-line-bg.jpg'); }
+        h1 { font-size: 3.8rem; line-height: 1.05; margin-bottom: 20px; text-shadow: 0 4px 12px rgba(0,0,0,0.9); }
+        h2 { font-size: 2.8rem; color: var(--accent); margin-bottom: 30px; text-shadow: 0 4px 12px rgba(0,0,0,0.9); }
+        .pill {
+            display: inline-block;
+            background: rgba(0,212,255,0.15);
+            border: 1px solid rgba(0,212,255,0.4);
+            color: var(--accent);
+            padding: 6px 18px;
+            border-radius: 30px;
+            margin: 6px 8px;
+            font-size: 0.95rem;
+        }
+        .chat-window {
+            background: #0f1625;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            max-width: 720px;
+            margin: 30px auto;
+        }
+        .chat-row { display: flex; margin-bottom: 20px; }
+        .chat-bubble {
+            padding: 16px 22px;
+            border-radius: 20px;
+            max-width: 80%;
+        }
+        .user-bubble { background: #2a334a; border-bottom-left-radius: 6px; }
+        .agent-bubble { 
+            background: linear-gradient(135deg, #00d4ff, #39d353); 
+            color: #0a0e1a; 
+            font-weight: 600;
+            border-bottom-right-radius: 6px;
+        }
+        .video-slide {
+            width: 1180px;
+            padding: 50px 60px;
+            min-height: 900px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            max-height: 800px;
+            border-radius: 12px;
+            border: 3px solid var(--accent);
+            background: #000;
+        }
+        .flow {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            align-items: flex-start;
+        }
+        .flow-box {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 22px;
+            width: 100%;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        td { padding: 10px 12px; }
+    </style>
+</head>
+<body>
+
+<img id="fixed-logo" src="./assets/logo-weiss.png" alt="Logo" />
+
+<div id="impress">
+
+    <!-- Racetrack Background (3D Depth Layer) -->
+    <div id="racetrack-bg" class="step" data-x="5000" data-y="5000" data-z="-200" data-scale="1" data-rotate="0"></div>
+
+    <!-- 1. TITLE -->
+    <div class="step slide-01" data-x="2300" data-y="-1500" data-rotate="0" data-z="100" data-scale="1.4" data-rotate-x="-6" data-rotate-y="9">
+        <div style="text-align:center;">
+            <div class="title-eyebrow" style="color:#00d4ff; font-size:1.15rem;">Arvato Systems · Agentic Commerce · 2026</div>
+            <h1>Ein Satz.<br>Ein Agent.<br>Eine Bestellung.</h1>
+            <div class="title-claim" style="margin-top:30px; font-size:1.35rem;">
+                Kein Formular. Kein Klick-Pfad. Kein Abbruch.
+            </div>
+            <div style="margin-top:40px;">
+                <span class="pill">CrewAI</span>
+                <span class="pill" style="background:rgba(0,212,255,0.2);">Azure GPT-5 Mini</span>
+                <span class="pill" style="background:rgba(57,211,83,0.2); color:#39d353;">MCP Tools</span>
+                <span class="pill">T9T Aroma2</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. PROOF OF CONCEPT -->
+    <div class="step slide-02" data-x="1411" data-y="943" data-rotate="40" data-z="100" data-scale="0.9" data-rotate-x="6" data-rotate-y="-9">
+        <span class="lap-label" style="color:#ff6a00; font-size:1.2rem;">Das Problem</span>
+        <h2>Checkout in einem Satz. Nicht sieben Seiten.</h2>
+        <div style="display:flex; gap:60px; margin-top:40px;">
+            <div style="flex:1; font-size:1.5rem;">
+                <p>Jede Formular-Seite kostet Conversion.<br>Kunden wissen, was sie wollen — sie wollen es nicht eintippen.</p>
+                <p style="margin-top:20px;"><strong>Agentic Checkout:</strong> Ein Satz. Der Agent versteht den Kontext, findet Produkte, wählt Optionen, bucht die Zahlung. Fertig in 45 Sekunden.</p>
+            </div>
+            <div style="flex:1;">
+                <table>
+                    <tr style="border-bottom:1px solid rgba(255,106,0,0.3);"><td style="color:#ff6a00;font-weight:700;">Alte Methode</td><td style="text-align:right;">7–8 Min</td></tr>
+                    <tr style="border-bottom:1px solid rgba(255,106,0,0.3);"><td style="color:#ff6a00;font-weight:700;">Abbruchquote</td><td style="text-align:right;">44% bei Zahlung</td></tr>
+                    <tr style="border-bottom:1px solid #39d353;"><td style="color:#39d353;font-weight:700;">Neue Methode</td><td style="text-align:right;color:var(--accent2);">45 Sekunden</td></tr>
+                    <tr><td style="color:#39d353;font-weight:700;">Abbruchquote</td><td style="text-align:right;color:var(--accent2);">Nur Budget-Fehler</td></tr>
+                </table>
+                <div style="margin-top:20px; padding:14px; background:rgba(57,211,83,0.1); border-left:4px solid #39d353; border-radius:6px;">
+                    <strong style="color:#39d353;">💡 Erkenntnisse:</strong> Weniger Reibung = höhere Conversion · KI versteht Intent und Customer besser als Formulare
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 3. DAS PROBLEM -->
+    <div class="step slide-03" data-x="-840" data-y="2242" data-rotate="80" data-z="100" data-scale="0.85" data-rotate-x="-15" data-rotate-y="16">   
+        <div style="text-align:center;">
+            <span class="lap-label" style="color:#ff6a00; font-size:1.2rem;">Die Idee</span>
+            <h2>Wo wir hinwollen.</h2>
+            <div class="chat-window">
+                <div class="chat-row user">
+                    <div class="chat-avatar" style="font-size:2rem;">👤</div>
+                    <div class="chat-bubble user-bubble" style="margin-left: 1em">Ich möchte ein rotes Sommerkleid in Größe M — bezahlen mit PayPal, DHL Express.</div>
+                </div>
+                <div class="chat-row agent">
+                    <div class="chat-avatar" style="font-size:2rem;">🤖</div>
+                    <div class="chat-bubble agent-bubble" style="margin-left: 1em">Bestellung ORD-99001 aufgegeben. Total: €59,98. ✅</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. DIE LÖSUNG -->
+    <div class="step slide-04" data-x="-3400" data-y="1791" data-rotate="120" data-z="100" data-scale="0.87" data-rotate-x="13" data-rotate-y="-17">
+        <span class="lap-label" style="color:var(--accent); font-size:1.2rem;">Unsere Lösung</span>
+        <h2>Das bestehende Backend. Unverändert. KI-fähig.</h2>
+        <div style="display:flex; gap:50px; margin-top:40px;">
+            <div style="flex:1; font-size:1.5rem;">
+                <p>Keine neuen Datenbanken. Keine Migration. Keine Risiken.</p>
+                <p style="margin-top:16px;">Der Agent sitzt <strong>oben auf</strong> dem bestehenden Aroma-System. Alle Preisregeln, Lagerbestände, Rabatte — alles läuft wie immer.</p>
+            </div>
+            <div style="flex:1;">
+                <strong>Stack (3 Komponenten):</strong>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
+                    <div class="card" style="padding:18px;"><div class="label">Agent Orchestrator</div><strong>agentic-commerce-poc</strong><br><small>Python · CrewAI · FastAPI</small></div>
+                    <div class="card" style="padding:18px;"><div class="label">KI-Gehirn</div><strong>Azure OpenAI</strong><br><small>GPT-5 Mini · Tool Calling</small></div>
+                    <div class="card" style="padding:18px;"><div class="label">MCP Tool Bridge</div><strong>a28 / T9T</strong><br><small>8+ Tools</small></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. VIDEO 1 -->
+    <div class="step video-slide slide-06" data-x="-5071" data-y="-200" data-z="100" data-rotate="160" data-scale="1.15" data-rotate-x="-4" data-rotate-y="5">
+        <h2 style="text-align:center; color:var(--accent);">Produktsuche</h2>
+        <p style="text-align:center; margin-bottom:20px;">Semantisches Verständnis</p>
+        <video controls loop muted playsinline>
+            <source src="./deck/videos/buy-basic.mp4" type="video/mp4">
+            <source src="./deck/videos/buy-basic.mov" type="video/quicktime">
+        </video>
+    </div>
+
+    <!-- 7. VIDEO 2 -->
+    <div class="step video-slide slide-07" data-x="-5071" data-y="-2800" data-z="100" data-rotate="200" data-scale="1.15" data-rotate-x="5" data-rotate-y="-6">
+        <h2 style="text-align:center; color:var(--accent);">Kompletter Checkout</h2>
+        <p style="text-align:center; margin-bottom:20px;">5 Turns → Bestellung aufgegeben</p>
+        <video controls loop muted playsinline>
+            <source src="./deck/videos/checkout-terms.mp4" type="video/mp4">
+            <source src="./deck/videos/checkout-terms.mov" type="video/quicktime">
+        </video>
+    </div>
+
+    <!-- 8. WETTBEWERBSVORTEIL -->
+    <div class="step slide-02" data-x="-3400" data-y="-4791" data-z="100" data-rotate="240" data-scale="0.45" data-rotate-x="-6" data-rotate-y="4">
+        <div style="text-align:center;">
+            <span class="lap-label" style="color:var(--accent); font-size:1.2rem;">Selbstverbessernde Feedback-Schleife.</span>
+            <h2 style="color:var(--accent); margin-top:0em;">KI testet KI.</h2>
+            <div class="chat-window" style="margin-top:10px;">
+                <div style="display:flex; flex-direction:column; gap:14px; text-align:left;">
+                    <div class="chat-row">
+                        <div class="chat-bubble user-bubble" style="width:100%;">📝 <strong>Szenario</strong><br><small style="color:var(--muted);">z.B. "Adresse während Checkout ändern"</small></div>
+                    </div>
+                    <div style="text-align:center; font-size:1.8rem; color:var(--accent);">↓</div>
+                    <div class="chat-row">
+                        <div class="chat-bubble agent-bubble" style="width:100%; color:#0a0e1a;">🤖 <strong>CustomerLLM testet</strong><br><small>Echtes Kundenverhalten simulieren</small></div>
+                    </div>
+                    <div style="text-align:center; font-size:1.8rem; color:var(--accent);">↓</div>
+                    <div class="chat-row">
+                        <div class="chat-bubble user-bubble" style="width:100%;">📋 <strong>JudgeLLM bewertet</strong><br><small style="color:var(--muted);">BESTANDEN ✅ oder FEHLER ❌</small></div>
+                    </div>
+                    <div style="text-align:center; font-size:1.8rem; color:var(--accent2);">↓</div>
+                    <div class="chat-row">
+                        <div class="chat-bubble agent-bubble" style="width:100%; color:#0a0e1a;">💻 <strong>Code verbessert sich</strong></div>
+                    </div>
+                </div>
+            </div>
+            <div style="display:flex; gap:30px; margin-top:40px;">
+                <div style="flex:1; background:rgba(57,211,83,0.15); border:1px solid rgba(57,211,83,0.3); padding:20px; border-radius:10px;">
+                    <strong style="color:#39d353; font-size:1.2rem;">6 Szenarien</strong><br><small style="color:var(--muted);">buy_basic, checkout_cc, cart_modify...</small>
+                </div>
+                <div style="flex:1; background:rgba(57,211,83,0.15); border:1px solid rgba(57,211,83,0.3); padding:20px; border-radius:10px;">
+                    <strong style="color:#39d353; font-size:1.2rem;">3 Sprachen</strong><br><small style="color:var(--muted);">DE, EN, FR · 100% Quote bestanden</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. WAS ENTHALTEN IST -->
+    <div class="step slide-05" data-x="-840" data-y="-5242" data-z="100" data-rotate="280" data-scale="0.9" data-rotate-x="14" data-rotate-y="-18">
+        <h2>Auf dem Weg zur Produktion.</h2>
+        <div style="display:flex; gap:60px; margin-top:40px;">
+            <div style="flex:1;">
+                <p>Kein Spielzeug. Ein echtes System mit echten Daten. Live-Bestellungen. Echte Zahlungen. Kubernetes deployed.</p>
+            </div>
+            <div style="flex:1;">
+                <ul style="margin-top:16px; line-height:2.0; font-size:1.1rem;">
+                    <li>✅ Agent Codebase — Python · CrewAI</li>
+                    <li>✅ Frontend Scaffold — Nuxt 4</li>
+                    <li>✅ MCP Tools — 8+ vorkonfiguriert für T9T</li>
+                    <li>✅ Self-Test Suite — LLM-basiert, selbstverbessernd</li>
+                    <li>✅ Mehrsprachig — DE, EN, FR</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10. FINALE -->
+    <div class="step slide-07" data-x="1411" data-y="-3943" data-z="100" data-scale="2.4" data-rotate="320" data-rotate-x="-2" data-rotate-y="3">
+        <div style="text-align:center;">
+            <h1 style="margin-top:40px;">Der nächste Lap startet jetzt.</h1>
+            <div style="margin-top:70px; font-size:2.6rem; line-height:1.35; font-weight:600;">
+                Multi-Intent.<br>
+                <span style="color:var(--accent);">Realtime Voice.</span><br>
+                <span style="color:#39d353;">UCP Kompatibilität.</span>
+            </div>
+            <div style="margin-top:80px; font-size:1.3rem; color:var(--muted);">
+                Jede Woche: +Test-Szenarien. Jeden Monat: +Kompetenz.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="./js/impress.js"></script>
+<script>
+    impress().init();
+    
+    // Fullscreen toggle on 'f' key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'f' || event.key === 'F') {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log('Fullscreen request failed:', err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
