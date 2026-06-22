@@ -58,7 +58,7 @@
             width: 1050px;
             padding: 80px 80px;
             min-height: 700px;
-            background: transparent;
+            background: rgba(10, 14, 26, 0.85);
             border: 1px solid var(--border);
             border-radius: 18px;
             box-shadow: 0 30px 90px rgba(0,0,0,0.85);
@@ -67,7 +67,6 @@
             justify-content: center;
             position: relative;
             transition: background 10s ease;
-            overflow: hidden;
         }
         .step::before {
             content: '';
@@ -80,33 +79,18 @@
             background-position: center;
             background-repeat: no-repeat;
             border-radius: 18px;
-            z-index: 0;
+            z-index: -1;
             opacity: 1;
             transition: opacity 10s ease, filter 4s ease;
             filter: brightness(0.7) contrast(1.1);
         }
-        .step::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10, 14, 26, 0.75);
-            border-radius: 18px;
-            z-index: 0;
-            pointer-events: none;
-        }
         .step.active::before {
-            opacity: 0.15;
-            filter: brightness(0.35) contrast(1.1);
-        }
-        .step.active::after {
-            background: rgba(10, 14, 26, 0.5);
+            opacity: 0.1;
+            filter: brightness(0.25) contrast(1.1) grayscale(100%);
         }
         .step > * {
             position: relative;
-            z-index: 2;
+            z-index: 1;
         }
         .slide-01::before { background-image: url('./images/01-title-bg.jpg'); }
         .slide-02::before { background-image: url('./images/02-starting-grid-bg.jpg'); }
