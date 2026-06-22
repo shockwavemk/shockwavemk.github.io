@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS Code Chat Animation - Daily Jira Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #1e1e1e;
+            color: #cccccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .vscode-container {
+            width: 100%;
+            max-width: 100%;
+            height: 85vh;
+            background: #1e1e1e;
+            border-radius: 0;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #3e3e42;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            color: #cccccc;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .back-button:hover {
+            color: #ffffff;
+        }
+
+        .header-title {
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: #1f6feb;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .message.assistant .message-content {
+            background: transparent;
+            color: #d4d4d4;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #858585;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% {
+                opacity: 0.5;
+                transform: translateY(0);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            padding: 10px 12px;
+            font-family: "Consolas", "Monaco", "Courier New", monospace;
+            font-size: 12px;
+            color: #ce9178;
+            overflow-x: auto;
+            margin: 8px 0;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            background: #2d2d30;
+            border: 1px solid #3e3e42;
+            border-radius: 3px;
+            padding: 3px 8px;
+            font-size: 11px;
+            color: #858585;
+            margin: 4px 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-size: 11px;
+            font-weight: 500;
+            margin: 4px 4px 4px 0;
+        }
+
+        .status-critical {
+            background: #78291d;
+            color: #f48771;
+        }
+
+        .status-progress {
+            background: #2d2420;
+            color: #dcdcaa;
+        }
+
+        .status-medium {
+            background: #1f3d1f;
+            color: #7dd81f;
+        }
+
+        .input-area {
+            padding: 16px 20px;
+            border-top: 1px solid #3e3e42;
+            background: #252526;
+            flex-shrink: 0;
+        }
+
+        .input-placeholder {
+            color: #666666;
+            font-size: 13px;
+            padding: 8px 12px;
+            background: #1e1e1e;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            cursor: text;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            padding: 12pxcontent: center;
+            padding: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #1f6feb;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #388bfd;
+        }
+
+        button:disabled {
+            background: #3e3e42;
+            color: #858585;
+            cursor: not-allowed;
+        }
+
+        .link {
+            color: #569cd6;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .bold {
+            color: #d4d4d4;
+            font-weight: 600;
+        }
+
+        /* Scrollbar styling */
+        .chat-area::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .chat-area::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb {
+            background: #464647;
+            border-radius: 5px;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb:hover {
+            background: #5a5a5a;
+        }
+
+        .list-item {
+            margin-left: 20px;
+            margin-top: 4px;
+        }
+
+        .subitem {
+            margin-left: 20px;
+            color: #a8a8a8;
+            font-size: 12px;
+        }
+
+        .checkbox {
+            color: #4ec9b0;
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="vscode-container">
+        <div class="header">
+            <button class="back-button">←</button>
+            <div class="header-title">ANYTHING NEW TODAY?</div>
+        </div>
+
+        <div class="chat-area" id="chatArea">
+            <!-- Messages will be dynamically added here -->
+        </div>
+
+        <div class="input-area">
+            <div class="input-placeholder" id="inputPlaceholder">
+                Handle my Jira tickets and pull requests
+            </div>
+        </div>
+    </div>
+
+    <div class="controls" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: auto;">
+        <button onclick="startAnimation()">Start Animation</button>
+        <button onclick="resetAnimation()">Reset</button>
+    </div>
+
+    <script>
+        const messages = [
+            {
+                type: 'user',
+                content: 'Anything new today?'
+            },
+            {
+                type: 'assistant',
+                content: "I'll check for new open Jira tickets assigned to you and any pull requests needing attention."
+            },
+            {
+                type: 'assistant',
+                content: '<span class="skill-tag">● open-work-assigned-to-me</span>\n\nNow I\'ll fetch your open assigned Jira tickets and download them:'
+            },
+            {
+                type: 'assistant',
+                content: '<div class="code-block">Ran ascli jira-download assigned-open 2>&1 | head -80</div>'
+            },
+            {
+                type: 'assistant',
+                content: 'Let me get the complete list:'
+            },
+            {
+                type: 'assistant',
+                content: '<div class="code-block">Ran ascli jira-download assigned-open 2>&1 | tail -60</div>'
+            },
+            {
+                type: 'assistant',
+                content: 'Perfect! Now let me create a summary of your daily work queue:'
+            },
+            {
+                type: 'assistant',
+                content: 'Created 12 todos'
+            },
+            {
+                type: 'assistant',
+                content: '<strong style="color: #d4d4d4;">Daily Status: 12 Open Tickets Assigned to You</strong>\n\n<span class="checkbox">✓</span> <strong class="bold">Downloaded all tickets locally to</strong> <span class="link">work-orga</span> <strong class="bold">with full attachments and comments.</strong>\n\n<strong style="color: #d4d4d4; margin-top: 12px; display: block;">Quick Triage by Urgency</strong>\n\n<span class="status-badge status-critical">🔴 CRITICAL / BLOCKERS (Act Today):</span>\n<div class="list-item">1. <strong>CA-1574</strong> — CundA error investigation (with 1 attachment)\n<div class="subitem">○ Status: Unknown — needs inspection</div>\n<div class="subitem">○ Next: Read the README to assess CundA impact. Likely delegate to C&A Log Analysis agent.</div>\n</div>\n<div class="list-item">2. <strong>EGG-428</strong> — Pimcockpit-173: SKU export enhancement\n<div class="subitem">○ Status: To Merge (implementation done, PR ready)</div>\n<div class="subitem">○ Has 2 attachments (image + doc)</div>\n<div class="subitem">○ Next: Review and merge the PR.</div>\n</div>'
+            },
+            {
+                type: 'assistant',
+                content: '<span class="status-badge status-progress">🟡 IN PROGRESS / HIGH PRIORITY (This Week):</span>\n<div class="list-item">3. <strong>CA-1573</strong> — Tooling registry snapshots (CandA)\n<div class="subitem">• Status: Implementation in progress</div>\n<div class="subitem">• Next: Check PR status and finalize.</div>\n</div>\n<div class="list-item">4. <strong>EGG-439</strong> — Add tooling registry to Egger snapshots\n<div class="subitem">○ Similar to CA-1573 but for Egger project</div>\n<div class="subitem">○ Next: Check PR and finalize.</div>\n</div>\n<div class="list-item">5. <strong>STD-390</strong> — ABE-3133 test implementation\n<div class="subitem">○ Status: PR active (#204)</div>\n<div class="subitem">○ Next: Check if PR needs updates or is ready to merge.</div>\n</div>\n\n<span class="status-badge status-medium">🟢 MEDIUM PRIORITY (Plan This Week):</span>\n<div class="list-item">6. <strong>STD-438</strong> — n8n version tag creation</div>\n<div class="list-item">7. <strong>TAK-525</strong> — Takko feature work</div>\n<div class="list-item">8. <strong>JPAW-16</strong> — Java 25 upgrade (PR active #11)</div>\n<div class="list-item">9. <strong>AIS-224</strong> — Instore UI feature (in-progress branch)</div>\n<div class="list-item">10. <strong>TLS-194</strong> — XSD collection artifact build</div>\n<div class="list-item">11. <strong>TBE-1679</strong> — Tiger backend task</div>\n<div class="list-item">12. <strong>OD-20</strong> — Database sync (Oracle → PostgreSQL)</div>'
+            },
+            {
+                type: 'assistant',
+                content: '<strong style="color: #d4d4d4;">Next Actions</strong>\n\n<strong class="bold">Would you like me to:</strong>\n\n<div class="list-item">1. <strong>Deep-dive on CA-1574 (CundA issue)?</strong> — I can delegate to C&A Log Analysis subagent for full investigation.</div>\n<div class="list-item">2. <strong>Check the merge-ready PRs (EGG-428, STD-390, JPAW-16)?</strong> — Quick review to unblock them.</div>\n<div class="list-item">3. <strong>Focus on a specific ticket from the list above?</strong></div>'
+            },
+            {
+                type: 'assistant',
+                content: "I'll start with CA-1574 to understand the CundA error investigation and assess whether to delegate to the C&A Log Analysis agent."
+            },
+            {
+                type: 'assistant',
+                content: '<span class="link">● README.md</span>\n\nLet me check the attachment to see the Grafana alert details:'
+            },
+            {
+                type: 'assistant',
+                content: '<span class="status-badge status-critical">Viewed image</span> image-20260618-053859.png'
+            },
+            {
+                type: 'assistant',
+                content: 'Perfect. This is clearly a <strong>CundA3 production issue</strong> with <strong class="bold">transaction errors in cart updates</strong> spiking at 07:00 UTC on 2026-06-18. The Grafana dashboard shows:\n\n<div class="list-item">• <strong class="bold">Transaction errors</strong> peaked at 8 errors</div>\n<div class="list-item">• t9t.a28cart.request.UpdateCartRequest failures</div>\n<div class="list-item">• Errors in workflows section also showing issues</div>\n\nThis is a <strong class="bold">blocking production issue</strong> that needs immediate log analysis. I\'ll delegate to the C&A Log Analysis subagent:'
+            },
+            {
+                type: 'assistant',
+                content: '<span style="color: #858585;">Starting:</span> CA-1574 - Review & triage (CundA error investigation) (1/12)\n\n<strong style="color: #858585;">C&A Log Analysis:</strong> Investigate CA-1574 cart update production issue\n\n<span style="color: #858585;">Optimized tool selection</span>'
+            },
+            {
+                type: 'assistant',
+                content: 'Excellent! The C&A Log Analysis agent has identified the root cause. Let me mark this as complete and summarize:'
+            },
+            {
+                type: 'assistant',
+                content: '<span style="color: #858585;">Completed:</span> CA-1574 - Review & triage (CundA error investigation) (1/12)\n\n<span class="checkbox">✓</span> <strong class="bold" style="color: #d4d4d4;">CA-1574 Complete — Production Issue Root Cause Identified</strong>\n\n<strong class="bold">Issue:</strong> Cart update failures in CundA3 at 2026-06-18 07:00 UTC\n\n<strong class="bold">Root Cause:</strong> Database optimistic lock contention in <span class="code-block" style="display: inline-block; padding: 2px 6px;">NumberRangeEntity</span> and <span class="code-block" style="display: inline-block; padding: 2px 6px;">SourcingStatusEntity</span> during concurrent cart updates, causing version mismatch exceptions.\n\n<strong class="bold">Impact:</strong> 178 hard failures out of 39,856 requests (0.45% failure rate) — P1 blocking during the spike window.\n\n<strong class="bold">Immediate Actions Ready:</strong>\n\n<div class="list-item">1. Sequence pre-allocation increase (reduce contention hotspot)</div>\n<div class="list-item">2. Retry logic with exponential backoff for OptimisticLockException</div>\n<div class="list-item">3. Database connection pool scaling (20–30% increase)</div>'
+            },
+            {
+                type: 'assistant',
+                content: '<strong style="color: #7dd81f;">✓ CA-1574 Complete — Production Issue Root Cause Identified</strong>\n\n<strong class="bold">Issue:</strong> Cart update failures in CundA3 at 2026-06-18 07:00 UTC\n\n<strong class="bold">Root Cause:</strong> Database optimistic lock contention in NumberRangeEntity and SourcingStatusEntity during concurrent cart updates, causing version mismatch exceptions.\n\n<strong class="bold">Impact:</strong> 178 hard failures out of 39,856 requests (0.45% failure rate) — P1 blocking during the spike window.\n\n<strong class="bold">Immediate Actions Ready:</strong>\n\n<div class="list-item">1. Sequence pre-allocation increase (reduce contention hotspot)</div>\n<div class="list-item">2. Retry logic with exponential backoff for OptimisticLockException</div>\n<div class="list-item">3. Database connection pool scaling (20–30% increase)</div>\n<div class="list-item">4. Continuous monitoring for recurrence</div>\n\n<strong class="bold">Documentation:</strong>\n\n<div class="list-item">• <span class="link">📄 INCIDENT_ANALYSIS.md</span> — Technical deep dive</div>\n<div class="list-item">• <span class="link">📄 CUSTOMER_RESPONSE.md</span> — Ready to send to customer</div>\n\n<strong class="bold">Status:</strong> Ready to send customer response and escalate to engineering for fix implementation.'
+            },
+            {
+                type: 'assistant',
+                content: '<strong style="color: #d4d4d4;">What\'s Next?</strong>\n\nYour top 3 actionable items:\n\n<div class="list-item"><strong class="bold">1. EGG-428</strong> — SKU export enhancement <span class="status-badge status-medium">(Status: To Merge)</span> — 5 min to review & merge</div>\n\n<div class="list-item"><strong class="bold">2. CA-1573 / EGG-439</strong> — Tooling registry PRs (both appear complete) — 10 min total to finalize</div>\n\n<div class="list-item"><strong class="bold">3. STD-390</strong> — ABE-3133 tests (PR #204 active) — Check if ready to merge</div>\n\n<strong class="bold">Would you like me to focus on any of these merge-ready items, or should I dive deeper into another ticket?</strong>'
+            },
+            {
+                type: 'user',
+                content: 'Update ticket'
+            },
+            {
+                type: 'assistant',
+                content: 'Perfect! CA-1574 is now updated and marked as <strong class="bold">In Arbeit</strong> (In Progress).\n\n<strong style="color: #7dd81f;">✓ Summary:</strong>\n\n<div class="list-item"><span style="color: #7dd81f;">✅</span> <strong class="bold">Investigation comment added</strong> with root cause, impact, and recommendations</div>\n\n<div class="list-item"><span style="color: #7dd81f;">✅</span> <strong class="bold">Status transitioned to In Progress</strong> — ready for engineering to implement fixes</div>\n\n<div class="list-item"><span style="color: #7dd81f;">✅</span> <strong class="bold">Documentation files</strong> (INCIDENT_ANALYSIS.md, CUSTOMER_RESPONSE.md) are in <span class="link">CA-1574</span> for distribution</div>\n\n<strong class="bold">Would you like me to move on to the next ticket, or handle something else on CA-1574?</strong>'
+            }
+        ];
+
+        let messageIndex = 0;
+        let charIndex = 0;
+        let isAnimating = false;
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function addMessage(type, content, isTyping = false) {
+            const chatArea = document.getElementById('chatArea');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            if (type === 'user') {
+                contentDiv.textContent = content;
+            } else {
+                contentDiv.innerHTML = content;
+            }
+
+            messageDiv.appendChild(contentDiv);
+
+            if (isTyping) {
+                messageDiv.id = `message-${messageIndex}`;
+            }
+
+            chatArea.appendChild(messageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+
+            return messageDiv;
+        }
+
+        function typeMessage(content, messageElement) {
+            return new Promise((resolve) => {
+                const contentDiv = messageElement.querySelector('.message-content');
+                let currentText = '';
+                charIndex = 0;
+
+                const typeNextChar = () => {
+                    if (charIndex < content.length) {
+                        currentText += content[charIndex];
+                        contentDiv.textContent = currentText;
+                        charIndex++;
+                        document.getElementById('chatArea').scrollTop = document.getElementById('chatArea').scrollHeight;
+                        setTimeout(typeNextChar, 40); // Typing speed
+                    } else {
+                        resolve();
+                    }
+                };
+
+                typeNextChar();
+            });
+        }
+
+        async function animateMessages() {
+            isAnimating = true;
+            const chatArea = document.getElementById('chatArea');
+            chatArea.innerHTML = '';
+
+            for (messageIndex = 0; messageIndex < messages.length; messageIndex++) {
+                const msg = messages[messageIndex];
+
+                // Add typing indicator for assistant before message
+                if (msg.type === 'assistant' && messageIndex > 0) {
+                    const typingDiv = document.createElement('div');
+                    typingDiv.className = 'message assistant';
+                    typingDiv.innerHTML = '<div class="message-content"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+                    chatArea.appendChild(typingDiv);
+                    chatArea.scrollTop = chatArea.scrollHeight;
+                    await new Promise(r => setTimeout(r, 1200));
+                    typingDiv.remove();
+                }
+
+                // Add the actual message
+                const messageElement = addMessage(msg.type, msg.content, true);
+                
+                // For shorter responses or HTML, just show them
+                if (msg.content.includes('<') || msg.content.length < 100) {
+                    await new Promise(r => setTimeout(r, 800));
+                } else {
+                    // For longer text, use typing effect
+                    await typeMessage(msg.content, messageElement);
+                }
+
+                // Delay between messages
+                await new Promise(r => setTimeout(r, 1000));
+            }
+
+            isAnimating = false;
+        }
+
+        function startAnimation() {
+            if (!isAnimating) {
+                animateMessages();
+            }
+        }
+
+        function resetAnimation() {
+            isAnimating = false;
+            document.getElementById('chatArea').innerHTML = '';
+            messageIndex = 0;
+            charIndex = 0;
+        }
+
+        // Auto-start animation on load or visibility change
+        function initAnimation() {
+            if (!isAnimating && document.getElementById('chatArea').innerHTML === '') {
+                startAnimation();
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(initAnimation, 500);
+        });
+
+        // Handle iframe visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && !isAnimating && document.getElementById('chatArea').innerHTML === '') {
+                setTimeout(initAnimation, 300);
+            }
+        });
+
+        // Handle parent message for restart
+        window.addEventListener('message', (event) => {
+            if (event.data === 'restart-animation') {
+                resetAnimation();
+                setTimeout(startAnimation, 300);
+            }
+        });
+    </script>
+</body>
+</html>
