@@ -126,8 +126,8 @@
             filter: brightness(0.7) contrast(1.1);
         }
         .step.active::before {
-            opacity: 0.1;
-            filter: brightness(0.25) contrast(1.1) grayscale(100%);
+            opacity: 0.3;
+            filter: brightness(0.35) contrast(1.1) grayscale(100%);
         }
         .step > * {
             position: relative;
@@ -204,6 +204,16 @@
         }
         table { width: 100%; border-collapse: collapse; }
         td { padding: 10px 12px; }
+        #kitt-scanner {
+            width: 60%;
+            max-width: 500px;
+            height: 2px;
+            margin: 25px auto;
+            display: block;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.8), transparent);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            border-radius: 1px;
+        }
     </style>
 </head>
 <body>
@@ -223,6 +233,7 @@
         <div style="text-align:center;">
             <div class="title-eyebrow" style="color:#00d4ff; font-size:1.15rem;">Arvato Systems · Agentic Commerce · 2026</div>
             <h1>Ein Satz.<br>Ein Agent.<br>Eine Bestellung.</h1>
+            <div id="kitt-scanner"></div>
             <div class="title-claim" style="margin-top:30px; font-size:1.35rem;">
                 Kein Formular. Kein Klick-Pfad. Kein Abbruch.
             </div>
@@ -377,14 +388,14 @@
     <!-- 10. FINALE -->
     <div class="step slide-07" data-x="1411" data-y="-3943" data-z="100" data-scale="1.4" data-rotate="300" data-rotate-x="-2" data-rotate-y="3">
         <div style="text-align:center;">
-            <h1 style="margin-top:40px;">Der nächste Lap startet jetzt.</h1>
+            <h1 style="margin-top:40px;">Mission: Conversion Accepted.</h1>
             <div style="margin-top:70px; font-size:2.6rem; line-height:1.35; font-weight:600;">
                 Multi-Intent.<br>
                 <span style="color:var(--accent);">Realtime Voice.</span><br>
                 <span style="color:#39d353;">UCP Kompatibilität.</span>
             </div>
             <div style="margin-top:80px; font-size:1.3rem; color:var(--muted);">
-                Jede Woche: +Test-Szenarien. Jeden Monat: +Kompetenz.
+                Intelligenz. Zuverlässigkeit. Automatisierung.
             </div>
         </div>
     </div>
@@ -459,6 +470,30 @@
     });
     
     updateSlideCounter();
+
+    // KITT Scanner Line Animation - Left to right sweep with fading edges
+    const kittLine = document.getElementById('kitt-scanner');
+    if (kittLine) {
+        let kittTime = 0;
+        function sweepKITT() {
+            kittTime += 0.02;
+            // Sweep from 0 to 1 and back (left to right)
+            const sweep = (Math.sin(kittTime) + 1) / 2; // Oscillates 0 to 1
+            
+            // Background gradient that follows the sweep position
+            const gradPos = Math.round(sweep * 100);
+            kittLine.style.backgroundImage = `linear-gradient(90deg, 
+                transparent 0%, 
+                transparent ${Math.max(0, gradPos - 15)}%, 
+                rgba(255, 0, 0, 0.8) ${gradPos}%, 
+                transparent ${Math.min(100, gradPos + 15)}%, 
+                transparent 100%)`;
+            
+            kittLine.style.boxShadow = `0 0 ${20}px rgba(255, 0, 0, 0.5)`;
+            requestAnimationFrame(sweepKITT);
+        }
+        sweepKITT();
+    }
 </script>
 
 </body>
