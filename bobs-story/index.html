@@ -46,6 +46,21 @@
       animation: fadeIn 0.35s ease;
     }
     .slide.active { display: flex; }
+    
+    .slide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(135deg, rgba(13, 17, 23, 0.92) 0%, rgba(13, 17, 23, 0.92) 100%),
+        url('./background.webp');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      filter: grayscale(100%) brightness(0.85);
+      z-index: 0;
+      pointer-events: none;
+    }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(8px); }
@@ -98,21 +113,59 @@
       color: var(--muted);
     }
 
-    h1 { font-size: 2.8rem; font-weight: 700; line-height: 1.15; }
-    h2 { font-size: 1.9rem; font-weight: 600; margin-bottom: 32px; color: var(--accent); }
-    h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
-    p  { font-size: 1.05rem; line-height: 1.7; color: var(--muted); }
-    .subtitle { font-size: 1.2rem; color: var(--muted); margin-top: 12px; }
+    .slide > * {
+      position: relative;
+      z-index: 10;
+    }
+
+    h1 { 
+      font-size: 3.6rem; 
+      font-weight: 800; 
+      line-height: 1.15;
+      text-shadow: 0 0 20px rgba(88, 166, 255, 0.4), 0 0 40px rgba(63, 185, 80, 0.2);
+    }
+    h2 { 
+      font-size: 2.4rem; 
+      font-weight: 700; 
+      margin-bottom: 32px; 
+      color: var(--accent);
+      text-shadow: 0 0 15px rgba(88, 166, 255, 0.3);
+    }
+    h3 { 
+      font-size: 1.4rem; 
+      font-weight: 700; 
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    p  { 
+      font-size: 1.15rem; 
+      line-height: 1.8; 
+      color: var(--text);
+      font-weight: 500;
+    }
+    .subtitle { 
+      font-size: 1.35rem; 
+      color: var(--text);
+      margin-top: 12px;
+      font-weight: 600;
+    }
 
     .tag {
       display: inline-block;
       background: rgba(88,166,255,0.15);
-      border: 1px solid rgba(88,166,255,0.3);
+      border: 1.5px solid rgba(88,166,255,0.4);
       color: var(--accent);
       border-radius: 20px;
-      padding: 3px 12px;
-      font-size: 0.8rem;
-      margin: 4px 3px;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+      margin: 6px 4px;
+      font-weight: 600;
+      box-shadow: 0 0 12px rgba(88, 166, 255, 0.15);
+      transition: all 0.3s ease;
+    }
+    .tag:hover {
+      box-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
+      border-color: rgba(88,166,255,0.6);
     }
 
     .cols { display: flex; gap: 32px; width: 100%; align-items: flex-start; }
@@ -120,24 +173,37 @@
 
     .card {
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: 10px;
       padding: 24px 28px;
       margin-bottom: 16px;
+      box-shadow: 0 0 15px rgba(88, 166, 255, 0.1);
+      transition: all 0.3s ease;
     }
-    .card-icon { font-size: 1.5rem; margin-bottom: 8px; }
+    .card:hover {
+      box-shadow: 0 0 25px rgba(88, 166, 255, 0.2);
+      border-color: rgba(88, 166, 255, 0.3);
+    }
+    .card-icon { 
+      font-size: 2rem; 
+      margin-bottom: 12px;
+      display: inline-block;
+      filter: drop-shadow(0 0 8px rgba(88, 166, 255, 0.2));
+    }
 
     .code-block {
       background: #010409;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: 8px;
       padding: 18px 22px;
       font-family: "SF Mono", "Fira Code", monospace;
-      font-size: 0.88rem;
-      line-height: 1.7;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.8;
       overflow-x: auto;
       white-space: pre;
       max-width: 100%;
+      box-shadow: 0 0 15px rgba(88, 166, 255, 0.08);
     }
     .code-block .prompt { color: var(--accent2); }
     .code-block .cmd    { color: var(--accent); }
@@ -153,30 +219,45 @@
       margin-bottom: 18px;
     }
     .tl-num {
-      width: 36px; height: 36px;
+      width: 42px; height: 42px;
       background: var(--accent);
       color: var(--bg);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 0.9rem;
+      font-weight: 800; font-size: 1.1rem;
       flex-shrink: 0;
+      box-shadow: 0 0 15px rgba(88, 166, 255, 0.3);
     }
-    .tl-body h3 { color: var(--text); font-size: 1rem; }
-    .tl-body p  { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
+    .tl-body h3 { 
+      color: var(--text); 
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .tl-body p  { 
+      font-size: 1rem; 
+      color: var(--text); 
+      margin-top: 4px;
+      font-weight: 500;
+    }
 
     .big-quote {
-      font-size: 1.7rem;
-      font-weight: 300;
-      line-height: 1.5;
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1.6;
       color: var(--text);
       text-align: center;
       max-width: 780px;
-      border-left: 4px solid var(--accent);
-      padding-left: 28px;
+      border-left: 5px solid var(--accent);
+      padding-left: 32px;
       text-align: left;
+      text-shadow: 0 0 20px rgba(88, 166, 255, 0.15);
     }
 
-    .big-quote span { color: var(--accent); font-weight: 600; }
+    .big-quote span { 
+      color: var(--accent); 
+      font-weight: 700;
+      text-shadow: 0 0 15px rgba(88, 166, 255, 0.25);
+    }
 
     .progress {
       position: fixed;
@@ -187,7 +268,7 @@
       z-index: 200;
     }
 
-    #slide-1 { background: radial-gradient(ellipse at 60% 40%, rgba(88,166,255,0.08) 0%, transparent 60%), var(--bg); }
+    #slide-1 { position: relative; }
 
     .compare { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
     .compare th { background: var(--surface2); color: var(--muted); font-weight: 500; padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); }
@@ -207,13 +288,57 @@
 
   <!-- SLIDE 1: TITLE -->
   <section class="slide active" id="slide-1">
-    <div style="text-align:center; max-width: 900px;">
-      <h1>Bob's Day</h1>
-      <p class="subtitle">A story about going on vacation and leaving your replacement behind</p>
-      <div style="margin-top: 48px; font-size: 5rem;">🏖️</div>
-      <p style="margin-top: 32px; color: var(--muted);">Alice is going on summer vacation. Bob is his replacement. But Bob is working for another project.</p>
-      <p style="margin-top: 16px; font-size: 0.85rem; color: var(--muted);">What happens when the first ticket lands?</p>
+    <div style="text-align:center; max-width: 1000px; position: relative; z-index: 10;">
+      <div style="margin-bottom: 24px;">
+        <span class="tag" style="background: rgba(88,166,255,0.15); border-color: rgba(88,166,255,0.3); color: var(--accent);">ascli</span>
+        <span class="tag" style="background: rgba(210,168,255,0.15); border-color: rgba(210,168,255,0.3); color: var(--accent4);">🤖 Copilot Agents</span>
+        <span class="tag" style="background: rgba(227,179,65,0.15); border-color: rgba(227,179,65,0.3); color: var(--yellow);">📚 Skills</span>
+      </div>
+
+      <h1 style="font-size: 3.6rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+        Bob's Day
+      </h1>
+
+      <p style="font-size: 1.4rem; color: var(--text); font-weight: 600; margin-bottom: 16px; line-height: 1.6;">
+        A story about going on vacation<br/>and leaving your replacement<span style="color: var(--accent3);">.</span>
+      </p>
+
+      <div style="margin: 48px 0; font-size: 6rem; animation: float 3s ease-in-out infinite;">🏖️</div>
+
+      <div style="background: linear-gradient(135deg, rgba(88,166,255,0.08), rgba(63,185,80,0.08)); border: 1px solid rgba(88,166,255,0.2); border-radius: 12px; padding: 28px 32px; margin-bottom: 32px;">
+        <p style="font-size: 1.1rem; color: var(--text); line-height: 1.8; margin-bottom: 16px;">
+          <strong style="color: var(--accent2);">Alice</strong> is going on summer vacation.<br/>
+          <strong style="color: var(--accent3);">Bob</strong> is her replacement, but he's deep in another project.
+        </p>
+        <p style="font-size: 1.15rem; color: var(--accent); font-weight: 700; margin: 0;">
+          What happens when the first ticket lands?
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 40px;">
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+          <div style="font-size: 2.4rem; margin-bottom: 8px;">⚡</div>
+          <p style="font-size: 0.9rem; color: var(--muted); font-weight: 500;">10× faster incident response</p>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+          <div style="font-size: 2.4rem; margin-bottom: 8px;">🎓</div>
+          <p style="font-size: 0.9rem; color: var(--muted); font-weight: 500;">Built-in expert knowledge</p>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center;">
+          <div style="font-size: 2.4rem; margin-bottom: 8px;">🔐</div>
+          <p style="font-size: 0.9rem; color: var(--muted); font-weight: 500;">Works while experts vacation</p>
+        </div>
+      </div>
+
+      <p style="margin-top: 40px; font-size: 0.85rem; color: var(--muted);">June 2026 · The Tools That Make It Possible</p>
     </div>
+
+    <style>
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+      }
+    </style>
   </section>
 
   <!-- SLIDE 2: THE SETUP -->
@@ -221,21 +346,22 @@
     <h2>The Setup</h2>
     <div class="cols">
       <div class="col">
-        <div class="card">
+        <div class="card" style="background: rgba(88,166,255,0.08); border-color: rgba(88,166,255,0.3);">
           <div class="card-icon">👨‍💻</div>
-          <h3>Alice</h3>
-          <p>Java expert. Knows the codebase, the frameworks, where everything lives. Off to the Maldives for 2 weeks.</p>
+          <h3 style="color: var(--accent);">Alice</h3>
+          <p><strong style="color: var(--text);">Java expert.</strong> Knows every line of code, every framework detail, where everything lives. <span style="color: var(--accent); font-weight: 600;">Off to the Maldives for 2 weeks</span> starting tomorrow.</p>
         </div>
       </div>
       <div class="col">
-        <div class="card">
+        <div class="card" style="background: rgba(247,129,102,0.08); border-color: rgba(247,129,102,0.3);">
           <div class="card-icon">🔧</div>
-          <h3>Bob</h3>
-          <p>Developer. Currently working on another project, not familiar with the Java monolith and recent changes.</p>
+          <h3 style="color: var(--accent3);">Bob</h3>
+          <p><strong style="color: var(--text);">Developer.</strong> Smart, motivated, currently deep in another project. <span style="color: var(--accent3); font-weight: 600;">First time here.</span> Doesn't know the codebase, the frameworks, the gotchas.</p>
         </div>
       </div>
     </div>
-    <p style="text-align: center; margin-top: 28px; color: var(--yellow);">Alice: "Don't worry, nothing will break while I'm gone."</p>
+    <p style="text-align: center; margin-top: 40px; font-size: 1.15rem; color: var(--yellow); font-weight: 600; line-height: 1.6;">Alice: <span style="color: var(--text); font-style: italic;">"Don't worry, nothing will break while I'm gone."</span></p>
+    <p style="text-align: center; margin-top: 12px; color: var(--accent3); font-weight: 700; font-size: 1rem;">⏰ 24 hours until she leaves...</p>
   </section>
 
   <!-- SLIDE 3: THE PROBLEM -->
@@ -489,13 +615,40 @@
 
   <!-- SLIDE 14: CLOSING -->
   <section class="slide" id="slide-14">
-    <div style="text-align: center;">
-      <h2 style="margin-bottom: 36px;">Questions?</h2>
-      <p style="font-size: 1.1rem; margin-bottom: 28px;">Get started:</p>
-      <div class="code-block" style="display: inline-block;">
-<span class="prompt">$</span> <span class="cmd">ascli</span> <span class="arg">--help</span>
+    <div style="text-align: center; max-width: 1000px;">
+      <h2 style="margin-bottom: 12px; font-size: 3.2rem; color: var(--accent3);">Don't Be Bob Without The Tools</h2>
+      <p style="font-size: 1.25rem; color: var(--yellow); font-weight: 600; margin-bottom: 48px; text-transform: uppercase; letter-spacing: 1px;">Join the 10× Operator Era</p>
+      
+      <div style="background: linear-gradient(135deg, rgba(88,166,255,0.1), rgba(63,185,80,0.1)); border: 2px solid var(--accent); border-radius: 12px; padding: 36px 40px; margin-bottom: 32px;">
+        <h3 style="color: var(--accent); margin-bottom: 20px; font-size: 1.3rem;">🚀 Start in 3 Minutes</h3>
+        <div class="code-block" style="font-size: 0.9rem; margin-bottom: 20px;">
+<span class="prompt">$</span> <span class="cmd">git clone</span> <span class="arg">git@github.com:arvato-systems-jacs/dotfiles.git</span> <span class="arg">~/git/jacs-dotfiles</span>
+<span class="prompt">$</span> <span class="cmd">pip install</span> <span class="arg">click</span>
+<span class="prompt">$</span> <span class="cmd">echo</span> <span class="arg">"alias ascli='python3 ~/git/jacs-dotfiles/python/cli/ascli.py'"</span> <span class="arg">> ~/.zshrc</span>
+        </div>
+        <p style="color: var(--accent2); font-weight: 600; margin: 0;">✓ Done. You're a 10× operator now.</p>
       </div>
-      <p style="margin-top: 32px; color: var(--muted);">github.com/arvato-systems-jacs/jacs-dotfiles</p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 40px;">
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px;">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">⚡</div>
+          <p style="font-weight: 600; color: var(--text); margin-bottom: 4px;">10× Faster</p>
+          <p style="font-size: 0.85rem; color: var(--muted);">Incident response in minutes, not hours</p>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px;">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">🎓</div>
+          <p style="font-weight: 600; color: var(--text); margin-bottom: 4px;">Expert Knowledge</p>
+          <p style="font-size: 0.85rem; color: var(--muted);">No onboarding call. It's all built in.</p>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px;">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">🔐</div>
+          <p style="font-weight: 600; color: var(--text); margin-bottom: 4px;">Always Ready</p>
+          <p style="font-size: 0.85rem; color: var(--muted);">While your expert is on vacation.</p>
+        </div>
+      </div>
+
+      <p style="margin-bottom: 16px; color: var(--muted);"><strong style="color: var(--text);">Want more?</strong> Add Copilot Agents to unlock AI-powered diagnosis and automatic Jira updates.</p>
+      <p style="margin-top: 28px; font-size: 1rem; color: var(--accent);">📁 <strong>github.com/arvato-systems-jacs/jacs-dotfiles</strong> | 🐍 <strong>ascli --help</strong></p>
     </div>
   </section>
 
