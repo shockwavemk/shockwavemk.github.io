@@ -217,6 +217,116 @@
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
             border-radius: 1px;
         }
+        
+        /* ============================================================
+           REUSABLE TYPOGRAPHY CLASSES
+           ============================================================ */
+        
+        /* LABELS & EYEBROWS */
+        .slide-label {
+            color: var(--accent);
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+        
+        .label-orange { color: var(--accent3); }
+        .label-cyan { color: var(--accent); }
+        .label-green { color: var(--accent2); }
+        
+        /* MAIN HEADINGS */
+        .slide-headline {
+            font-size: 6.8rem;
+            line-height: 1.1;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            color: white;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3), 
+                        0 0 20px rgba(255,255,255,0.2), 
+                        0 0 40px rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+        }
+        
+        /* SECONDARY HEADINGS */
+        .slide-subheading {
+            font-size: 4.2rem;
+            line-height: 1.2;
+            font-weight: 900;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .slide-subheading.white {
+            color: white;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2), 
+                        0 0 20px rgba(255,255,255,0.1);
+        }
+        
+        .slide-subheading.cyan {
+            color: var(--accent);
+        }
+        
+        /* TERTIARY HEADINGS */
+        .slide-title {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+        
+        /* BODY & CLAIM TEXT */
+        .slide-text {
+            font-size: 1.6rem;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+        
+        .slide-claim {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+        
+        .slide-claim.white {
+            color: white;
+            text-shadow: 0 0 10px rgba(255,255,255,0.15);
+        }
+        
+        .slide-claim.green {
+            color: var(--accent2);
+            text-shadow: 0 0 10px rgba(57,211,83,0.4), 
+                        0 0 20px rgba(57,211,83,0.2);
+        }
+        
+        /* TEXT COLORS WITH GLOW */
+        .text-white {
+            color: white;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3), 
+                        0 0 20px rgba(255,255,255,0.2);
+        }
+        
+        .text-cyan {
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(0,212,255,0.5), 
+                        0 0 20px rgba(0,212,255,0.3), 
+                        0 0 40px rgba(0,212,255,0.2);
+        }
+        
+        .text-green {
+            color: var(--accent2);
+            text-shadow: 0 0 10px rgba(57,211,83,0.5), 
+                        0 0 20px rgba(57,211,83,0.3), 
+                        0 0 40px rgba(57,211,83,0.2);
+        }
+        
+        .text-orange {
+            color: var(--accent3);
+        }
     </style>
 </head>
 <body>
@@ -234,15 +344,15 @@
     <!-- 1. TITLE -->
     <div class="step slide-01" data-x="2300" data-y="-1500" data-rotate="0" data-z="100" data-scale="1.4" data-rotate-x="-6" data-rotate-y="9">
         <div style="text-align:center;">
-            <div class="title-eyebrow" style="color:#00d4ff; font-size:1.5rem; font-weight:800; letter-spacing:0.1em;">ARVATO SYSTEMS · AGENTIC COMMERCE · 2026</div>
+            <div class="slide-label label-cyan">ARVATO SYSTEMS · AGENTIC COMMERCE · 2026</div>
 
-            <div style="margin-top:80px; font-size:6.8rem; line-height:1.1; font-weight:900; letter-spacing:-0.04em; text-transform:uppercase; color:white; text-shadow: 0 0 10px rgba(255,255,255,0.3), 0 0 20px rgba(255,255,255,0.2), 0 0 40px rgba(255,255,255,0.1);">
+            <div class="slide-headline">
                 Ein Satz.<br>
-                <span style="color:white; text-shadow: 0 0 10px rgba(0,212,255,0.5), 0 0 20px rgba(0,212,255,0.3), 0 0 40px rgba(0,212,255,0.2);">Ein Agent.</span><br>
-                <span style="color:#39d353; text-shadow: 0 0 10px rgba(57,211,83,0.5), 0 0 20px rgba(57,211,83,0.3), 0 0 40px rgba(57,211,83,0.2);">Eine Bestellung.</span>
+                <span class="text-white">Ein Agent.</span><br>
+                <span class="text-green">Eine Bestellung.</span>
             </div>
             <div id="kitt-scanner"></div>
-            <div class="title-claim" style="margin-top:40px; font-size:1.8rem; font-weight:700; letter-spacing:0.05em;">
+            <div class="slide-claim white">
                 KEIN FORMULAR. KEIN KLICK-PFAD. KEIN ABBRUCH.
             </div>
             <div style="margin-top:40px;">
@@ -258,11 +368,11 @@
     <div class="step slide-02" data-x="1411" data-y="943" data-rotate="40" data-z="100" data-scale="0.9" data-rotate-x="6" data-rotate-y="-9">
         <div style="display:flex; gap:60px; align-items:center;">
             <div style="flex:1; text-align:center;">
-                <div style="color:#ff6a00; font-size:1.5rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase;">Das Problem</div>
-                <h2 style="font-size:4.2rem; line-height:1.2; font-weight:900; margin-top:30px; text-shadow: 0 0 10px rgba(255,255,255,0.2), 0 0 20px rgba(255,255,255,0.1);">Checkout in einem Satz.<br>Nicht sieben Seiten.</h2>
-                <div style="margin-top:40px; font-size:1.6rem; line-height:1.6; font-weight:600;">
-                    <p style="text-shadow: 0 0 10px rgba(255,255,255,0.15);">Jede Formular-Seite kostet Conversion.</p>
-                    <p style="margin-top:20px; color:#39d353; text-shadow: 0 0 10px rgba(57,211,83,0.4), 0 0 20px rgba(57,211,83,0.2);"><strong>Ein Satz. Ein Agent. Fertig in 45 Sekunden.</strong></p>
+                <div class="slide-label label-orange">Das Problem</div>
+                <h2 class="slide-subheading white">Checkout in einem Satz.<br>Nicht sieben Seiten.</h2>
+                <div class="slide-text" style="margin-top:40px;">
+                    <p class="text-white">Jede Formular-Seite kostet Conversion.</p>
+                    <p class="text-green" style="margin-top:20px;"><strong>Ein Satz. Ein Agent. Fertig in 45 Sekunden.</strong></p>
                 </div>
             </div>
             <div style="flex:1;">
@@ -275,8 +385,8 @@
     <!-- 3. DAS PROBLEM -->
     <div class="step slide-03" data-x="-840" data-y="2242" data-rotate="80" data-z="100" data-scale="0.85" data-rotate-x="-15" data-rotate-y="16">   
         <div style="text-align:center;">
-            <span class="lap-label" style="color:#ff6a00; font-size:1.5rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase;">Die Idee</span>
-            <h2 style="font-size:4.2rem; font-weight:900; margin-top:30px; line-height:1.2;">Wo wir hinwollen.</h2>
+            <div class="slide-label label-orange">Die Idee</div>
+            <h2 class="slide-subheading white">Wo wir hinwollen.</h2>
             <div class="chat-window">
                 <div class="chat-row user">
                     <div class="chat-avatar" style="font-size:2rem;">👤</div>
