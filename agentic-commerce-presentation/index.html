@@ -670,10 +670,11 @@
 <script src="./js/impress.js"></script>
 <script>
     const api = impress();
-    // Disable impress's built-in keyboard handling
-    api.init({ keyboard: false });
+    // Let impress handle keyboard navigation
+    api.init();
     
-    const slides = document.querySelectorAll('.step');
+    // Get all steps but exclude the racetrack background element
+    const slides = Array.from(document.querySelectorAll('.step')).filter(el => el.id !== 'racetrack-bg');
     const totalSlides = slides.length;
     let currentSlideIndex = 0;
     
@@ -681,43 +682,62 @@
     const prevButton = document.getElementById('prev-slide');
     const nextButton = document.getElementById('next-slide');
     
+    // Initialize currentSlideIndex based on the current URL hash
+    function initializeSlideIndex() {
+        const hash = window.location.hash;
+        if (hash.includes('step-')) {
+            const stepNum = parseInt(hash.match(/step-(\d+)/)[1]);
+            // Find which index in our slides array corresponds to this step
+            for (let i = 0; i < slides.length; i++) {
+                if (slides[i].className.includes(`slide-${String(stepNum).padStart(2, '0')}`)) {
+                    currentSlideIndex = i;
+                    break;
+                }
+            }
+        }
+    }
+    
     function updateSlideCounter() {
+        // Count how many unique actual slides come before the current one
+        // by tracking our position in the slides array
         slideCounter.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
     }
     
+    // Track whether impress is currently animating
+    let isAnimating = false;
+    let targetSlideIndex = 0;
+    
     function goNext() {
-        api.next();
+        if (!isAnimating && currentSlideIndex < totalSlides - 1) {
+            isAnimating = true;
+            targetSlideIndex = currentSlideIndex + 1;
+            api.goto(slides[targetSlideIndex], 1000);
+        }
     }
     
     function goPrev() {
-        api.prev();
+        if (!isAnimating && currentSlideIndex > 0) {
+            isAnimating = true;
+            targetSlideIndex = currentSlideIndex - 1;
+            api.goto(slides[targetSlideIndex], 1000);
+        }
     }
+    
+    // Listen for impress step enter events to sync our index and re-enable navigation
+    document.addEventListener('impress:stepenter', (event) => {
+        // Find the index of the currently displayed slide in our slides array
+        currentSlideIndex = slides.indexOf(event.target);
+        updateSlideCounter();
+        isAnimating = false;  // Re-enable navigation when impress finishes
+    });
     
     // Navigation button handlers
     nextButton.addEventListener('click', goNext);
     prevButton.addEventListener('click', goPrev);
     
-    // Track slide changes via impress events
-    document.addEventListener('impress:stepenter', (event) => {
-        const stepElement = event.target;
-        for (let i = 0; i < slides.length; i++) {
-            if (slides[i] === stepElement) {
-                currentSlideIndex = i;
-                updateSlideCounter();
-                break;
-            }
-        }
-    });
-    
-    // Keyboard navigation (arrow keys only - impress keyboard disabled)
+    // Keyboard navigation - only handle fullscreen, let impress handle arrow keys
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'ArrowRight') {
-            event.preventDefault();
-            goNext();
-        } else if (event.key === 'ArrowLeft') {
-            event.preventDefault();
-            goPrev();
-        } else if (event.key === 'f' || event.key === 'F') {
+        if (event.key === 'f' || event.key === 'F') {
             // Fullscreen toggle on 'f' key
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
@@ -746,6 +766,7 @@
         }
     }, { passive: false });
     
+    initializeSlideIndex();
     updateSlideCounter();
 
     // KITT Scanner Line Animation - Left to right sweep with fading edges
