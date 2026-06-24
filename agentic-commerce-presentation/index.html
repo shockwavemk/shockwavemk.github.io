@@ -685,21 +685,17 @@
         slideCounter.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
     }
     
-    function goToSlide(index) {
-        if (index >= 0 && index < totalSlides) {
-            api.goto(slides[index], 1000);
-            // Don't update currentSlideIndex here - let impress:stepenter handle it
-        }
+    function goNext() {
+        api.next();
+    }
+    
+    function goPrev() {
+        api.prev();
     }
     
     // Navigation button handlers
-    nextButton.addEventListener('click', () => {
-        goToSlide(currentSlideIndex + 1);
-    });
-    
-    prevButton.addEventListener('click', () => {
-        goToSlide(currentSlideIndex - 1);
-    });
+    nextButton.addEventListener('click', goNext);
+    prevButton.addEventListener('click', goPrev);
     
     // Track slide changes via impress events
     document.addEventListener('impress:stepenter', (event) => {
@@ -717,10 +713,10 @@
     document.addEventListener('keydown', function(event) {
         if (event.key === 'ArrowRight') {
             event.preventDefault();
-            goToSlide(currentSlideIndex + 1);
+            goNext();
         } else if (event.key === 'ArrowLeft') {
             event.preventDefault();
-            goToSlide(currentSlideIndex - 1);
+            goPrev();
         } else if (event.key === 'f' || event.key === 'F') {
             // Fullscreen toggle on 'f' key
             if (!document.fullscreenElement) {
@@ -744,9 +740,9 @@
         lastScrollTime = now;
         
         if (event.deltaY > 0) {
-            goToSlide(currentSlideIndex + 1);
+            goNext();
         } else if (event.deltaY < 0) {
-            goToSlide(currentSlideIndex - 1);
+            goPrev();
         }
     }, { passive: false });
     
