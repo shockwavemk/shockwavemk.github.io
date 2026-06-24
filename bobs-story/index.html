@@ -689,10 +689,33 @@ function prev() {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowRight') next();
-  if (e.key === 'ArrowLeft') prev();
+  if (e.key === 'ArrowRight') {
+    e.preventDefault();
+    next();
+  }
+  if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    prev();
+  }
   if (e.key === 'f' || e.key === 'F') toggleFullscreen();
 });
+
+// Scroll wheel navigation
+let lastScrollTime = 0;
+document.addEventListener('wheel', function(e) {
+  // Throttle scroll events (max once per 200ms)
+  const now = Date.now();
+  if (now - lastScrollTime < 200) return;
+  
+  e.preventDefault();
+  lastScrollTime = now;
+  
+  if (e.deltaY > 0) {
+    next();
+  } else if (e.deltaY < 0) {
+    prev();
+  }
+}, { passive: false });
 
 function toggleFullscreen() {
   if (!document.fullscreenElement) {
