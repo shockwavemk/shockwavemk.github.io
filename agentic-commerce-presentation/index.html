@@ -670,7 +670,8 @@
 <script src="./js/impress.js"></script>
 <script>
     const api = impress();
-    api.init();
+    // Disable impress's built-in keyboard handling
+    api.init({ keyboard: false });
     
     const slides = document.querySelectorAll('.step');
     const totalSlides = slides.length;
@@ -713,8 +714,7 @@
         }
     });
     
-    // Keyboard navigation (arrow keys only - impress handles space/other keys)
-    let lastKeyTime = 0;
+    // Keyboard navigation (arrow keys only - impress keyboard disabled)
     document.addEventListener('keydown', function(event) {
         if (event.key === 'ArrowRight') {
             event.preventDefault();
