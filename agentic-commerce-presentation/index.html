@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/impress.css" />
     
     <style>
         :root {
@@ -129,8 +128,8 @@
             filter: brightness(0.7) contrast(1.1);
         }
         .step.active::before {
-            opacity: 0.3;
-            filter: brightness(0.35) contrast(1.1) grayscale(100%);
+            opacity: 0.5;
+            filter: brightness(0.45) contrast(1.1) grayscale(20%);
         }
         .step > * {
             position: relative;
@@ -143,8 +142,8 @@
         .slide-05::before { background-image: url('./images/05-agent-cockpit-bg.webp'); }
         .slide-06::before { background-image: url('./images/06-race-circuit-bg.webp'); }
         .slide-07::before { background-image: url('./images/07-finish-line-bg.webp'); }
-        h1 { font-size: 3.8rem; line-height: 1.05; margin-bottom: 20px; text-shadow: 0 4px 12px rgba(0,0,0,0.9); }
-        h2 { font-size: 2.8rem; color: var(--accent); margin-bottom: 30px; text-shadow: 0 4px 12px rgba(0,0,0,0.9); }
+        h1 { font-size: 3.8rem; text-transform: uppercase; line-height: 1.05; margin-bottom: 20px; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(57, 211, 83, 0.6), 0 0 40px rgba(57, 211, 83, 0.4), 0 0 60px rgba(57, 211, 83, 0.2); }
+        h2 { font-size: 2.8rem; text-transform: uppercase; color: var(--accent); margin-bottom: 30px; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(57, 211, 83, 0.6), 0 0 40px rgba(57, 211, 83, 0.4), 0 0 60px rgba(57, 211, 83, 0.2); }
         .pill {
             display: inline-block;
             background: rgba(0,212,255,0.15);
@@ -261,8 +260,7 @@
         
         .slide-subheading.white {
             color: white;
-            text-shadow: 0 0 10px rgba(255,255,255,0.2), 
-                        0 0 20px rgba(255,255,255,0.1);
+            text-shadow: 0 14px 20px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.4), 0 0 40px rgba(255,255,255,0.2);
         }
         
         .slide-subheading.cyan {
@@ -306,22 +304,17 @@
         /* TEXT COLORS WITH GLOW */
         .text-white {
             color: white;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3), 
-                        0 0 20px rgba(255,255,255,0.2);
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.4), 0 0 40px rgba(255,255,255,0.2);
         }
         
         .text-cyan {
             color: var(--accent);
-            text-shadow: 0 0 10px rgba(0,212,255,0.5), 
-                        0 0 20px rgba(0,212,255,0.3), 
-                        0 0 40px rgba(0,212,255,0.2);
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 20px rgba(0,212,255,0.6), 0 0 40px rgba(0,212,255,0.4), 0 0 60px rgba(0,212,255,0.2);
         }
         
         .text-green {
             color: var(--accent2);
-            text-shadow: 0 0 10px rgba(57,211,83,0.5), 
-                        0 0 20px rgba(57,211,83,0.3), 
-                        0 0 40px rgba(57,211,83,0.2);
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 20px rgba(57,211,83,0.6), 0 0 40px rgba(57,211,83,0.4), 0 0 60px rgba(57,211,83,0.2);
         }
         
         .text-orange {
@@ -355,7 +348,7 @@
             margin: 0;
             letter-spacing: 0.03em;
             text-transform: uppercase;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 4px 16px rgba(0,0,0,0.9), 0 0 20px rgba(255,255,255,0.2);
         }
         
         .feedback-stats {
@@ -380,7 +373,7 @@
             margin: 0;
             letter-spacing: 0.03em;
             text-transform: uppercase;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 4px 16px rgba(0,0,0,0.9), 0 0 20px rgba(57,211,83,0.5);
         }
         
         /* CONTENT BOX STYLES */
@@ -406,7 +399,7 @@
             color: white;
             margin-bottom: 12px;
             letter-spacing: 0.03em;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 4px 20px rgba(0,0,0,0.9), 0 0 20px rgba(102,126,234,0.4);
         }
         
         .content-subtitle {
@@ -493,20 +486,29 @@
     <div class="step slide-04" data-x="-3400" data-y="1791" data-rotate="120" data-z="100" data-scale="0.87" data-rotate-x="13" data-rotate-y="-17">
         <div class="slide-label label-cyan">UNSERE LÖSUNG</div>
         <h2 class="slide-subheading white">UNSER BACKEND. UNVERÄNDERT. JETZT KI-FÄHIG.</h2>
-        <div style="display:flex; gap:50px; margin-top:20px;">
-            <div class="slide-text" style="flex:1;">
-                <p class="text-white">Keine neuen Datenbanken. Keine Migration. Keine Risiken.</p>
-                <p class="text-white" style="margin-top:16px;">Preisregeln, Lagerbestände, Rabatte — alles läuft wie immer.</p>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 40px;">
+            <div class="content-box">
+                <strong class="content-headline">✅ KEINE NEUEN DATENBANKEN</strong>
+                <p class="content-subtitle">Zero migration risk</p>
             </div>
-            <div style="flex:1;">
-                <img src="images/logos.png" alt="Stack architecture" style="max-width:100%; height:auto; border-radius:6px;">
+            <div class="content-box">
+                <strong class="content-headline">✅ ALLES LÄUFT WIE IMMER</strong>
+                <p class="content-subtitle">Preisregeln, Lagerbestände, Rabatte</p>
+            </div>
+            <div class="content-box">
+                <strong class="content-headline">✅ BESTEHENDE ARCHITEKTUR</strong>
+                <p class="content-subtitle">Agent sitzt oben auf dem System</p>
+            </div>
+            <div class="content-box">
+                <strong class="content-headline">✅ PRODUCTION-READY</strong>
+                <p class="content-subtitle">Sofort einsatzbereit</p>
             </div>
         </div>
     </div>
 
     <!-- 6. VIDEO 1 -->
     <div class="step video-slide slide-06" data-x="-5071" data-y="-200" data-z="100" data-rotate="160" data-scale="1.15" data-rotate-x="-4" data-rotate-y="5">
-        <h2 class="slide-headline" style="text-align:center; font-size:3.5rem; margin-bottom:20px;">DER BOT VERSTEHT DEN KUNDEN</h2>
+        <h2 class="slide-headline" style="text-align:center; font-size:3.5rem; margin-bottom:20px;">UNSER AGENT VERSTEHT DEN KUNDEN</h2>
         <p class="text-white" style="text-align:center; margin-bottom:20px;">PRODUKTSUCHE MIT PERSÖNLICHEN EMPFEHLUNGEN</p>
         <video controls loop muted playsinline>
             <source src="./videos/buy-basic.mp4" type="video/mp4">
@@ -557,7 +559,7 @@
 
     <!-- 9. WAS ENTHALTEN IST -->
     <div class="step slide-05" data-x="-840" data-y="-5242" data-z="100" data-rotate="280" data-scale="0.9" data-rotate-x="14" data-rotate-y="-18">
-        <h2 class="slide-subheading white">AUF DEM WEG ZUR PRODUKTION.</h2>
+        <h2 class="slide-subheading white">BEREIT FÜR ECHTE KUNDEN.</h2>
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px;">
             <div class="content-box">
                 <strong class="content-headline">✅ AGENT CODEBASE</strong>
