@@ -142,8 +142,35 @@
         .slide-05::before { background-image: url('./images/05-agent-cockpit-bg.webp'); }
         .slide-06::before { background-image: url('./images/06-race-circuit-bg.webp'); }
         .slide-07::before { background-image: url('./images/07-finish-line-bg.webp'); }
-        h1 { font-size: 3.8rem; text-transform: uppercase; line-height: 1.05; margin-bottom: 20px; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(57, 211, 83, 0.6), 0 0 40px rgba(57, 211, 83, 0.4), 0 0 60px rgba(57, 211, 83, 0.2); }
-        h2 { font-size: 2.8rem; text-transform: uppercase; color: var(--accent); margin-bottom: 30px; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(57, 211, 83, 0.6), 0 0 40px rgba(57, 211, 83, 0.4), 0 0 60px rgba(57, 211, 83, 0.2); }
+        h1 { 
+            font-size: 3.8rem; 
+            text-transform: uppercase; 
+            line-height: 1.1; 
+            margin-bottom: 20px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #ffffff;
+            text-shadow: 
+                0 0 4px rgba(255, 255, 255, 0.9),
+                0 0 12px rgba(255, 255, 255, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.95),
+                0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+        h2 { 
+            font-size: 2.8rem; 
+            text-transform: uppercase; 
+            color: #ffffff;
+            margin-bottom: 30px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-shadow: 
+                0 0 4px #ffffff,
+                0 0 12px var(--accent),
+                0 0 25px var(--accent),
+                0 4px 10px rgba(0, 0, 0, 0.95),
+                0 8px 25px rgba(0, 0, 0, 0.8);
+        }
         .pill {
             display: inline-block;
             background: rgba(0,212,255,0.15);
@@ -240,12 +267,15 @@
             font-size: 6.8rem;
             line-height: 1.1;
             font-weight: 900;
-            letter-spacing: -0.04em;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            color: white;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3), 
-                        0 0 20px rgba(255,255,255,0.2), 
-                        0 0 40px rgba(255,255,255,0.1);
+            color: #ffffff;
+            text-shadow: 
+                0 0 4px rgba(255, 255, 255, 0.9),
+                0 0 12px rgba(255, 255, 255, 0.5),
+                0 0 20px rgba(255, 255, 255, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.95),
+                0 10px 20px rgba(0, 0, 0, 0.8);
             margin-bottom: 30px;
         }
         
@@ -259,8 +289,14 @@
         }
         
         .slide-subheading.white {
-            color: white;
-            text-shadow: 0 14px 20px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.4), 0 0 40px rgba(255,255,255,0.2);
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-shadow: 
+                0 0 4px rgba(255, 255, 255, 0.9),
+                0 0 12px rgba(255, 255, 255, 0.5),
+                0 0 20px rgba(255, 255, 255, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.95),
+                0 10px 20px rgba(0, 0, 0, 0.8);
         }
         
         .slide-subheading.cyan {
@@ -291,8 +327,14 @@
         }
         
         .slide-claim.white {
-            color: white;
-            text-shadow: 0 0 10px rgba(255,255,255,0.15);
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-shadow: 
+                0 0 4px rgba(255, 255, 255, 0.9),
+                0 0 12px rgba(255, 255, 255, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.95),
+                0 10px 30px rgba(0, 0, 0, 0.8);
         }
         
         .slide-claim.green {
@@ -303,18 +345,24 @@
         
         /* TEXT COLORS WITH GLOW */
         .text-white {
-            color: white;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.4), 0 0 40px rgba(255,255,255,0.2);
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-shadow: 
+                0 0 4px rgba(255, 255, 255, 0.9),
+                0 0 12px rgba(255, 255, 255, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.95),
+                0 10px 30px rgba(0, 0, 0, 0.8);
         }
         
         .text-cyan {
-            color: var(--accent);
-            text-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 20px rgba(0,212,255,0.6), 0 0 40px rgba(0,212,255,0.4), 0 0 60px rgba(0,212,255,0.2);
+            color: #00f0ff;
+            letter-spacing: 1px;
         }
         
         .text-green {
-            color: var(--accent2);
-            text-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 20px rgba(57,211,83,0.6), 0 0 40px rgba(57,211,83,0.4), 0 0 60px rgba(57,211,83,0.2);
+            color: #ffffff;
+            letter-spacing: 1px;
         }
         
         .text-orange {
@@ -346,9 +394,9 @@
             font-size: 1.2rem;
             font-weight: 900;
             margin: 0;
-            letter-spacing: 0.03em;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            text-shadow: 0 4px 16px rgba(0,0,0,0.9), 0 0 20px rgba(255,255,255,0.2);
+            color: #ffffff;
         }
         
         .feedback-stats {
@@ -367,13 +415,18 @@
         }
         
         .feedback-stat-headline {
-            color: #39d353;
+            color: #ffffff;
             font-size: 1.1rem;
             font-weight: 900;
             margin: 0;
-            letter-spacing: 0.03em;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            text-shadow: 0 4px 16px rgba(0,0,0,0.9), 0 0 20px rgba(57,211,83,0.5);
+            text-shadow: 
+                0 0 4px #d33939,
+                0 0 12px #d3b239,
+                0 0 25px #d38639,
+                0 4px 10px rgba(0, 0, 0, 0.95),
+                0 8px 25px rgba(0, 0, 0, 0.8);
         }
         
         /* CONTENT BOX STYLES */
@@ -394,16 +447,23 @@
         
         .content-headline {
             display: block;
-            font-size: 1.3rem;
+            font-size: 2rem;
             font-weight: 900;
-            color: white;
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-shadow: 
+                0 0 4px rgba(255, 255, 255, 0.9),
+                0 0 12px rgba(255, 255, 255, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.95),
+                0 10px 30px rgba(0, 0, 0, 0.8);
             margin-bottom: 12px;
             letter-spacing: 0.03em;
             text-shadow: 0 4px 20px rgba(0,0,0,0.9), 0 0 20px rgba(102,126,234,0.4);
         }
         
         .content-subtitle {
-            font-size: 0.95rem;
+            font-size: 1.8rem;
             color: var(--muted);
             margin: 0;
             font-weight: 500;
