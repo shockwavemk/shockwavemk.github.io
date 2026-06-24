@@ -687,9 +687,8 @@
     
     function goToSlide(index) {
         if (index >= 0 && index < totalSlides) {
-            currentSlideIndex = index;
             api.goto(slides[index], 1000);
-            updateSlideCounter();
+            // Don't update currentSlideIndex here - let impress:stepenter handle it
         }
     }
     
